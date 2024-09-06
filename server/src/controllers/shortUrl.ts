@@ -3,6 +3,7 @@ import { shortUrlModel } from '../model/shortUrl';
 
 export const getAllUrls = async (req: express.Request, res: express.Response) => {
     try {
+        // sort
         const shortUrls = await shortUrlModel.find().sort({createdAt : -1});
         if (shortUrls.length === 0) {
             res.status(404).send({ "message": "Short URLs not found..." });
