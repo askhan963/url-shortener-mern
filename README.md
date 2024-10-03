@@ -12,6 +12,10 @@ A full-stack URL shortener service built using Node.js, TypeScript, Express, Mon
 - **User-friendly Interface**: Simple and clean UI built with React and Tailwind CSS for seamless interaction.
 - **Secure**: Built with modern web security practices.
 
+## Architecture:
+![](./architecture.png) 
+
+
 ## 🛠️ Tech Stack
 
 ### Backend
