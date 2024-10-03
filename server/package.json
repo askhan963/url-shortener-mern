@@ -14,6 +14,11 @@
     "client": "npm start --prefix ./frontend",
     "vercel-build": "npm run build"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+],
   "keywords": [],
   "author": "",
   "license": "ISC",
