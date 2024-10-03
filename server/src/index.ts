@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors({
-    origin: "https://url-shortener-askhan.netlify.app/",
+    origin: "https://url-shortener-askhan.netlify.app",
     credentials: true
 }))
 
