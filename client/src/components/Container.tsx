@@ -1,46 +1,31 @@
 import * as React from 'react';
 import FormContainer from './FormContainer';
-import { urlInterface } from '../interface/UrlData';
-import axios from 'axios';
-import { serverUrl } from '../helper/Connstants';
 import DataTable from './DataTable';
-
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchUrls, createUrl } from '../app/UrlSlice';
 interface IContainerProps {}
 
 const Container: React.FunctionComponent<IContainerProps> = () => {
-  const [data, setData] = React.useState<urlInterface[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  // Access Redux dispatch and state
+  const dispatch = useAppDispatch();
+  const { data, loading } = useAppSelector((state) => state.urls);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${serverUrl}/allUrls`);
-      setData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const changeLoad = (): void => {
-    setLoading(true);
-  };
-
+  // Fetch data when component mounts
   React.useEffect(() => {
-    fetchData();
-  }, [loading]);
+    dispatch(fetchUrls());
+  }, [dispatch]);
+
+  // Function to handle the form submission for creating a new URL
+  const handleCreateUrl = async (originalUrl: string) => {
+    await dispatch(createUrl(originalUrl));
+    dispatch(fetchUrls()); // Fetch updated data immediately after adding a new URL
+  };
 
   return (
     <>
-      <FormContainer reloadState={changeLoad} />
-     {
-      data.length > 0 &&
-      (
-        <DataTable reloadState={changeLoad} data={data} />
-      )
-     }
-      
+      <FormContainer createUrl={handleCreateUrl} /> {/* Use the new createUrl prop */}
+      {loading && <p>Loading...</p>}
+      {data.length > 0 && <DataTable reloadState={() => dispatch(fetchUrls())} data={data} />}
     </>
   );
 };

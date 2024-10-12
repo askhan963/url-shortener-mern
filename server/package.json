@@ -6,7 +6,7 @@
   "scripts": {
     
     "build": "rimraf dist && tsc",
-    "start": "npm run build && node ./dist/server.js",
+    "start": "npm run build && node ./dist/index.js",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1",
